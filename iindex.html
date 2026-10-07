@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Mamas — Cerita Kita</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root{
+  --night:#080b18;
+  --night2:#11162b;
+  --cream:#f8f1e7;
+  --gold:#d8b875;
+  --rose:#c77d89;
+  --soft:#d8d3cd;
+  --white:#fffdf9;
+  --dark:#202331;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--night);
+  color:var(--cream);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+button{
+  font-family:inherit;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ================= STAR FIELD ================= */
+
+#stars{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:#fff;
+  border-radius:50%;
+  opacity:.25;
+  animation:twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle{
+  0%,100%{opacity:.15;transform:scale(.7)}
+  50%{opacity:1;transform:scale(1.7)}
+}
+
+/* ================= MUSIC ================= */
+
+.music{
+  position:fixed;
+  right:20px;
+  top:20px;
+  z-index:999;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:1px solid rgba(216,184,117,.4);
+  background:rgba(10,14,30,.75);
+  color:var(--gold);
+  backdrop-filter:blur(15px);
+  cursor:pointer;
+  font-size:18px;
+  transition:.3s;
+}
+
+.music:hover{
+  transform:scale(1.08);
+}
+
+/* ================= INTRO ================= */
+
+#intro{
+  min-height:100vh;
+  position:relative;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(199,125,137,.16),transparent 25%),
+    radial-gradient(circle at 20% 20%,rgba(216,184,117,.08),transparent 25%),
+    linear-gradient(145deg,#050711,#10152a);
+}
+
+.intro-content{
+  width:min(800px,90%);
+  position:relative;
+  z-index:3;
+}
+
+.intro-small{
+  letter-spacing:7px;
+  font-size:11px;
+  color:var(--gold);
+  margin-bottom:30px;
+  animation:fadeUp 1.5s ease forwards;
+}
+
+.intro-content h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(60px,12vw,130px);
+  font-weight:500;
+  line-height:.8;
+  animation:fadeUp 1.5s .2s ease both;
+}
+
+.intro-sub{
+  margin-top:30px;
+  color:#c8c4bf;
+  font-size:14px;
+  letter-spacing:2px;
+  animation:fadeUp 1.5s .5s ease both;
+}
+
+.intro-date{
+  margin-top:25px;
+  color:var(--rose);
+  letter-spacing:5px;
+  font-size:12px;
+  animation:fadeUp 1.5s .7s ease both;
+}
+
+.start-btn{
+  margin-top:45px;
+  padding:16px 30px;
+  border:1px solid rgba(216,184,117,.5);
+  border-radius:50px;
+  background:rgba(255,255,255,.05);
+  color:var(--cream);
+  cursor:pointer;
+  transition:.4s;
+  animation:fadeUp 1.5s .9s ease both;
+}
+
+.start-btn:hover{
+  background:var(--cream);
+  color:var(--night);
+  transform:translateY(-4px);
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ================= ENVELOPE ================= */
+
+#envelopeScene{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(145deg,#090c1b,#151a31);
+  position:relative;
+  z-index:4;
+}
+
+.envelope-wrap{
+  width:min(500px,90%);
+}
+
+.envelope-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:46px;
+  margin-bottom:10px;
+}
+
+.envelope-sub{
+  color:#aaa8a6;
+  font-size:13px;
+  margin-bottom:45px;
+}
+
+.envelope{
+  width:300px;
+  height:190px;
+  margin:auto;
+  position:relative;
+  cursor:pointer;
+  perspective:800px;
+}
+
+.env-body{
+  position:absolute;
+  inset:0;
+  background:#eee5d7;
+  border-radius:5px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.env-flap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  border-left:150px solid transparent;
+  border-right:150px solid transparent;
+  border-top:105px solid #d9cbb8;
+  transform-origin:top;
+  transition:1s;
+  z-index:4;
+}
+
+.envelope.open .env-flap{
+  transform:rotateX(180deg);
+}
+
+.letter-inside{
+  position:absolute;
+  width:220px;
+  height:140px;
+  background:var(--white);
+  left:40px;
+  top:25px;
+  z-index:2;
+  padding:25px;
+  color:var(--dark);
+  font-family:'Cormorant Garamond',serif;
+  font-size:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  transition:1s;
+}
+
+.envelope.open .letter-inside{
+  transform:translateY(-110px);
+}
+
+.seal{
+  position:absolute;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:var(--rose);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  left:127px;
+  top:70px;
+  z-index:6;
+  transition:.5s;
+}
+
+.envelope.open .seal{
+  opacity:0;
+  transform:scale(1.5);
+}
+
+/* ================= MAIN ================= */
+
+#main{
+  display:none;
+  position:relative;
+  z-index:2;
+}
+
+.section{
+  padding:120px 0;
+  position:relative;
+}
+
+.container{
+  width:min(1050px,90%);
+  margin:auto;
+}
+
+.dark{
+  background:var(--night);
+}
+
+.dark2{
+  background:var(--night2);
+}
+
+.light{
+  background:var(--cream);
+  color:var(--dark);
+}
+
+.center{
+  text-align:center;
+}
+
+.eyebrow{
+  color:var(--rose);
+  text-transform:uppercase;
+  letter-spacing:5px;
+  font-size:10px;
+  margin-bottom:15px;
+}
+
+.title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(45px,8vw,80px);
+  font-weight:500;
+  line-height:.95;
+}
+
+.description{
+  max-width:650px;
+  margin:25px auto 0;
+  color:#aaa8a5;
+  line-height:1.9;
+  font-size:14px;
+}
+
+/* ================= CHAPTER 1 ================= */
+
+.story-intro{
+  min-height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(199,125,137,.12),transparent 30%),
+    var(--night);
+}
+
+.story-number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  color:var(--gold);
+  margin-bottom:25px;
+}
+
+.big-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(45px,8vw,90px);
+  line-height:.95;
+  max-width:900px;
+}
+
+.chat-story{
+  margin:60px auto 0;
+  max-width:650px;
+  display:grid;
+  gap:15px;
+}
+
+.chat{
+  max-width:75%;
+  padding:15px 20px;
+  border-radius:20px;
+  line-height:1.6;
+  font-size:13px;
+}
+
+.chat.left{
+  justify-self:start;
+  background:#191e34;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.chat.right{
+  justify-self:end;
+  background:#4d303b;
+}
+
+/* ================= TIMELINE ================= */
+
+.timeline-section{
+  background:var(--night2);
+}
+
+.timeline{
+  max-width:900px;
+  margin:70px auto 0;
+  position:relative;
+}
+
+.timeline-line{
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:rgba(216,184,117,.3);
+}
+
+.timeline-card{
+  width:50%;
+  padding:25px 45px;
+  position:relative;
+}
+
+.timeline-card:nth-child(even){
+  margin-left:50%;
+}
+
+.timeline-card:nth-child(odd){
+  text-align:right;
+}
+
+.timeline-dot{
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:var(--gold);
+  border-radius:50%;
+  top:40px;
+  box-shadow:0 0 25px rgba(216,184,117,.8);
+  cursor:pointer;
+}
+
+.timeline-card:nth-child(odd) .timeline-dot{
+  right:-7px;
+}
+
+.timeline-card:nth-child(even) .timeline-dot{
+  left:-7px;
+}
+
+.timeline-box{
+  padding:28px;
+  border-radius:20px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(216,184,117,.12);
+  cursor:pointer;
+  transition:.4s;
+}
+
+.timeline-box:hover{
+  transform:translateY(-7px);
+  border-color:rgba(216,184,117,.4);
+}
+
+.timeline-box h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.timeline-box p{
+  color:#aaa8a6;
+  line-height:1.8;
+  font-size:13px;
+}
+
+/* ================= MEMORY POPUP ================= */
+
+.memory-popup{
+  position:fixed;
+  inset:0;
+  background:rgba(2,4,12,.9);
+  backdrop-filter:blur(12px);
+  z-index:2000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+}
+
+.memory-box{
+  width:min(700px,95%);
+  background:var(--cream);
+  color:var(--dark);
+  padding:35px;
+  border-radius:25px;
+  position:relative;
+  animation:popup .5s ease;
+}
+
+@keyframes popup{
+  from{
+    opacity:0;
+    transform:scale(.9) translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:scale(1) translateY(0);
+  }
+}
+
+.memory-box img{
+  width:100%;
+  max-height:400px;
+  object-fit:cover;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+
+.memory-box h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.memory-box p{
+  line-height:1.8;
+  font-size:14px;
+}
+
+.close{
+  position:absolute;
+  right:18px;
+  top:15px;
+  border:none;
+  background:none;
+  font-size:25px;
+  cursor:pointer;
+}
+
+/* ================= PHOTOS ================= */
+
+.photo-section{
+  background:var(--cream);
+  color:var(--dark);
+}
+
+.photo-stage{
+  margin-top:65px;
+  min-height:550px;
+  position:relative;
+}
+
+.polaroid{
+  position:absolute;
+  width:280px;
+  background:white;
+  padding:12px 12px 35px;
+  box-shadow:0 25px 50px rgba(0,0,0,.22);
+  transition:.5s;
+}
+
+.polaroid img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  background:#ddd;
+}
+
+.polaroid span{
+  display:block;
+  text-align:center;
+  margin-top:15px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+}
+
+.photo1{
+  left:12%;
+  top:50px;
+  transform:rotate(-7deg);
+}
+
+.photo2{
+  right:12%;
+  top:110px;
+  transform:rotate(6deg);
+}
+
+.polaroid:hover{
+  transform:rotate(0) scale(1.07);
+  z-index:5;
+}
+
+.photo-note{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#777;
+  font-size:12px;
+}
+
+/* ================= LOVE METER ================= */
+
+.meter-section{
+  background:
+    radial-gradient(circle at 50% 40%,rgba(199,125,137,.14),transparent 30%),
+    var(--night);
+}
+
+.meter{
+  max-width:700px;
+  margin:60px auto 0;
+  text-align:center;
+}
+
+.meter-number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:90px;
+  color:var(--gold);
+}
+
+.meter-bar{
+  width:100%;
+  height:12px;
+  border-radius:20px;
+  background:#1c2137;
+  overflow:hidden;
+  margin:25px 0;
+}
+
+.meter-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,var(--rose),var(--gold));
+  transition:2s ease;
+}
+
+.meter button{
+  padding:14px 28px;
+  border-radius:30px;
+  border:1px solid rgba(216,184,117,.4);
+  background:transparent;
+  color:var(--cream);
+  cursor:pointer;
+}
+
+.meter-result{
+  margin-top:25px;
+  min-height:30px;
+  color:#c8c3bd;
+}
+
+/* ================= LETTER ================= */
+
+.letter-section{
+  background:var(--night2);
+}
+
+.letter{
+  max-width:750px;
+  margin:60px auto 0;
+  background:var(--white);
+  color:var(--dark);
+  padding:60px;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  position:relative;
+}
+
+.letter:before{
+  content:"";
+  position:absolute;
+  inset:15px;
+  border:1px solid #d7c7b4;
+}
+
+.letter-content{
+  position:relative;
+  z-index:2;
+}
+
+.letter p{
+  line-height:2;
+  margin-bottom:22px;
+}
+
+.signature{
+  font-family:'Cormorant Garamond',serif;
+  color:var(--rose);
+  font-size:35px;
+  margin-top:35px;
+}
+
+/* ================= FUTURE ================= */
+
+.future{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(216,184,117,.08),transparent 25%),
+    #070a15;
+}
+
+.future-cards{
+  margin-top:65px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+}
+
+.future-card{
+  padding:30px 18px;
+  text-align:center;
+  border:1px solid rgba(216,184,117,.14);
+  background:rgba(255,255,255,.025);
+  border-radius:20px;
+  transition:.4s;
+}
+
+.future-card:hover{
+  transform:translateY(-10px);
+  border-color:rgba(216,184,117,.5);
+}
+
+.future-card .icon{
+  font-size:30px;
+  margin-bottom:15px;
+}
+
+.future-card h3{
+  font-family:'Cormorant Garamond',serif;
+  color:var(--gold);
+  font-size:23px;
+  margin-bottom:10px;
+}
+
+.future-card p{
+  font-size:12px;
+  line-height:1.7;
+  color:#aaa8a6;
+}
+
+/* ================= GAME ================= */
+
+.game-section{
+  background:var(--cream);
+  color:var(--dark);
+}
+
+.game{
+  max-width:700px;
+  margin:60px auto 0;
+  background:white;
+  padding:40px;
+  border-radius:28px;
+  box-shadow:0 25px 70px rgba(0,0,0,.18);
+}
+
+.progress{
+  display:flex;
+  gap:7px;
+  margin-bottom:30px;
+}
+
+.progress span{
+  height:5px;
+  flex:1;
+  background:#ddd;
+  border-radius:10px;
+}
+
+.progress span.active{
+  background:var(--rose);
+}
+
+.question-label{
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--rose);
+  text-transform:uppercase;
+}
+
+.question{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;
+  margin:15px 0 25px;
+}
+
+.answers{
+  display:grid;
+  gap:12px;
+}
+
+.answer{
+  padding:16px;
+  border:1px solid #ddd5cc;
+  background:white;
+  border-radius:15px;
+  text-align:left;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.answer:hover{
+  transform:translateX(5px);
+  border-color:var(--rose);
+}
+
+.answer.correct{
+  background:#e5f2e2;
+  border-color:#78a773;
+}
+
+.answer.wrong{
+  background:#f8e1e4;
+  border-color:#c87c87;
+}
+
+.game-feedback{
+  min-height:30px;
+  margin-top:20px;
+  font-size:14px;
+}
+
+.next{
+  display:none;
+  margin-top:15px;
+  border:none;
+  background:var(--night);
+  color:white;
+  padding:13px 25px;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+.game-result{
+  display:none;
+  text-align:center;
+}
+
+.game-result h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:50px;
+}
+
+.unlock{
+  margin-top:30px;
+  padding:30px;
+  background:var(--night);
+  color:var(--cream);
+  border-radius:20px;
+}
+
+.unlock button{
+  margin-top:20px;
+  padding:13px 25px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+/* ================= SECRET ================= */
+
+.secret-screen{
+  position:fixed;
+  inset:0;
+  z-index:3000;
+  background:#050711;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+}
+
+.secret-content{
+  max-width:700px;
+}
+
+.secret-content .lock{
+  font-size:45px;
+  margin-bottom:25px;
+}
+
+.secret-content h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(45px,8vw,80px);
+  line-height:1;
+  margin-bottom:30px;
+}
+
+.secret-message{
+  display:none;
+  animation:fadeUp 1.5s ease;
+}
+
+.secret-message p{
+  color:#c9c5bf;
+  line-height:2;
+  margin-bottom:20px;
+}
+
+.secret-message strong{
+  color:var(--gold);
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;
+}
+
+/* ================= FINAL ================= */
+
+.final{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(199,125,137,.15),transparent 30%),
+    #080b18;
+}
+
+.final-small{
+  letter-spacing:6px;
+  color:var(--rose);
+  font-size:10px;
+}
+
+.final h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(60px,11vw,120px);
+  font-weight:500;
+  line-height:.85;
+  margin:30px 0;
+}
+
+.final p{
+  color:#c2beb9;
+  line-height:2;
+  max-width:600px;
+  margin:auto;
+}
+
+.final-heart{
+  font-size:45px;
+  margin-bottom:15px;
+  animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+}
+
+.restart{
+  margin-top:40px;
+  padding:14px 28px;
+  border:1px solid rgba(216,184,117,.4);
+  background:transparent;
+  color:var(--cream);
+  border-radius:30px;
+  cursor:pointer;
+}
+
+.footer{
+  background:#050711;
+  text-align:center;
+  padding:30px;
+  color:#686c7a;
+  font-size:11px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:750px){
+
+  .section{
+    padding:85px 0;
+  }
+
+  .envelope{
+    transform:scale(.85);
+  }
+
+  .timeline-line{
+    left:10px;
+  }
+
+  .timeline-card,
+  .timeline-card:nth-child(even){
+    width:100%;
+    margin-left:0;
+    padding:25px 0 25px 40px;
+    text-align:left;
+  }
+
+  .timeline-card:nth-child(odd) .timeline-dot,
+  .timeline-card:nth-child(even) .timeline-dot{
+    left:3px;
+    right:auto;
+  }
+
+  .photo-stage{
+    min-height:650px;
+  }
+
+  .polaroid{
+    width:230px;
+  }
+
+  .photo1{
+    left:3%;
+    top:40px;
+  }
+
+  .photo2{
+    right:3%;
+    top:260px;
+  }
+
+  .photo-note{
+    bottom:0;
+    width:90%;
+    text-align:center;
+  }
+
+  .future-cards{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .future-card:last-child{
+    grid-column:span 2;
+  }
+
+  .letter{
+    padding:45px 25px;
+  }
+
+  .game{
+    padding:25px 18px;
+  }
+
+  .question{
+    font-size:30px;
+  }
+
+  .meter-number{
+    font-size:70px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<button class="music" id="musicBtn">♫</button>
+
+<audio id="music" loop>
+  <source src="photograph.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- ================= INTRO ================= -->
+
+<section id="intro">
+
+  <div class="intro-content">
+
+    <div class="intro-small">A LITTLE STORY FOR MAMAS</div>
+
+    <h1>Sinok<br>& Mamas</h1>
+
+    <div class="intro-sub">
+      sebuah cerita yang belum selesai
+    </div>
+
+    <div class="intro-date">
+      22 • 11 • 2025
+    </div>
+
+    <button class="start-btn" onclick="startJourney()">
+      Mulai perjalanan kita ♡
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ENVELOPE ================= -->
+
+<section id="envelopeScene">
+
+  <div class="envelope-wrap">
+
+    <div class="eyebrow">PRIVATE LETTER</div>
+
+    <div class="envelope-title">
+      Untuk Mamas.
+    </div>
+
+    <div class="envelope-sub">
+      Ada sesuatu yang ingin Sinok ceritakan.
+    </div>
+
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+
+      <div class="letter-inside">
+        Untuk Mamas,<br>
+        dari Sinok ♡
+      </div>
+
+      <div class="env-body"></div>
+
+      <div class="env-flap"></div>
+
+      <div class="seal">♡</div>
+
+    </div>
+
+    <div style="margin-top:35px;color:#777;font-size:11px;">
+      klik amplopnya
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MAIN ================= -->
+
+<main id="main">
+
+
+<!-- CHAPTER 1 -->
+
+<section class="story-intro">
+
+  <div class="container">
+
+    <div class="story-number">
+      CHAPTER 01
+    </div>
+
+    <div class="big-text">
+      Semuanya bermula<br>
+      dari sebuah chat.
+    </div>
+
+    <div class="chat-story">
+
+      <div class="chat left">
+        Awalnya cuma ngobrol.
+      </div>
+
+      <div class="chat right">
+        Terus bercanda.
+      </div>
+
+      <div class="chat left">
+        Terus jadi nyaman.
+      </div>
+
+      <div class="chat right">
+        Terus... kok jadi sayang?
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section class="section dark">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">How It Started</div>
+
+      <h2 class="title">
+        Dari Leo Telegram<br>
+        sampai menjadi kita.
+      </h2>
+
+      <p class="description">
+        Kita tidak pernah punya satu momen resmi ketika
+        semuanya berubah. Tidak ada pernyataan cinta yang
+        dramatis. Kita hanya terus ngobrol, terus tertawa,
+        terus merasa nyaman... sampai akhirnya sama-sama
+        tahu bahwa kita sudah menjadi "kita".
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TIMELINE -->
+
+<section class="section timeline-section">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">Our Timeline</div>
+
+      <h2 class="title">
+        Kalau perjalanan kita<br>
+        dijadikan sebuah garis...
+      </h2>
+
+      <p class="description">
+        Klik setiap momen untuk melihat ceritanya.
+      </p>
+
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-line"></div>
+
+      <div class="timeline-card">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-box"
+          onclick="showMemory(
+          'Pertemuan Pertama',
+          'Setelah dua bulan chatting, akhirnya Mamas menjemput Sinok di stasiun. Memang Mamas sempat telat... tapi hari itu tetap menjadi salah satu hari paling penting karena untuk pertama kalinya kita bertemu langsung.',
+          'foto-1.jpg'
+          )">
+
+          <h3>Pertemuan Pertama</h3>
+
+          <p>
+            Dua bulan chatting akhirnya membawa kita
+            pada pertemuan pertama.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-card">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-box"
+          onclick="showMemory(
+          'Pantai Tirang',
+          'Sunset, ngobrol, lari-larian, menikmati waktu sederhana bersama, bahkan Mamas menggendong Sinok. Tidak mewah. Tidak rumit. Tapi justru momen sederhana seperti ini yang paling lama tinggal di hati.',
+          'foto-2.jpg'
+          )">
+
+          <h3>Pantai Tirang</h3>
+
+          <p>
+            Sunset, tawa, ngobrol, dan satu hari
+            yang ingin Sinok simpan selamanya.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-card">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-box"
+          onclick="showMemory(
+          'Pertama Kali Berenang',
+          'Mamas menjemput Sinok dan mengajak bermain bersama keluarga Mamas. Rasanya seperti Sinok mulai masuk sedikit demi sedikit ke dunia Mamas.',
+          ''
+          )">
+
+          <h3>Pertama Kali Berenang</h3>
+
+          <p>
+            Hari ketika Sinok mulai mengenal dunia
+            dan keluarga Mamas lebih dekat.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-card">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-box"
+          onclick="showMemory(
+          'Ketika Mamas Menjadi Imam',
+          'Di mushola alun-alun, Mamas memimpin Sinok dalam salat. Ada perasaan yang sulit dijelaskan ketika melihat seseorang yang Sinok sayangi menjadi imam. Saat itu Sinok mulai membayangkan masa depan.',
+          ''
+          )">
+
+          <h3>Menjadi Imam</h3>
+
+          <p>
+            Satu momen sederhana yang membuat Sinok
+            melihat Mamas dengan cara yang berbeda.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-card">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-box"
+          onclick="showMemory(
+          'Di Saat Sulit',
+          'Ketika Sinok tidak baik-baik saja, Mamas tetap ada. Membelikan minuman, membantu, merawat, dan memastikan Sinok baik-baik saja. Karena cinta ternyata paling terlihat ketika keadaan tidak mudah.',
+          ''
+          )">
+
+          <h3>Di Saat Sulit</h3>
+
+          <p>
+            Karena cinta bukan hanya tentang tertawa.
+            Kadang cinta adalah tentang tetap tinggal.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MEMORY POPUP -->
+
+<div class="memory-popup" id="memoryPopup">
+
+  <div class="memory-box">
+
+    <button class="close" onclick="closeMemory()">×</button>
+
+    <img id="memoryImage" src="" alt="" style="display:none;">
+
+    <h3 id="memoryTitle"></h3>
+
+    <p id="memoryText"></p>
+
+  </div>
+
+</div>
+
+
+<!-- PHOTO -->
+
+<section class="section photo-section">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">Our Memories</div>
+
+      <h2 class="title">
+        Dua foto.<br>
+        Seribu cerita.
+      </h2>
+
+      <p class="description" style="color:#777;">
+        Untuk sekarang, dua foto ini cukup.
+        Karena sebuah kenangan tidak pernah diukur
+        dari jumlah fotonya.
+      </p>
+
+    </div>
+
+
+    <div class="photo-stage">
+
+      <div class="polaroid photo1">
+
+        <img src="foto-1.jpg" alt="Kenangan pertama">
+
+        <span>
+          First Meeting
+        </span>
+
+      </div>
+
+
+      <div class="polaroid photo2">
+
+        <img src="foto-2.jpg" alt="Pantai Tirang">
+
+        <span>
+          Pantai Tirang
+        </span>
+
+      </div>
+
+      <div class="photo-note">
+        nanti kita tambahkan foto-foto lainnya ♡
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LOVE METER -->
+
+<section class="section meter-section">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">A Very Serious Question</div>
+
+      <h2 class="title">
+        Seberapa besar<br>
+        rasa sayang Sinok?
+      </h2>
+
+      <p class="description">
+        Tekan tombolnya. Tapi Sinok sudah memperingatkan:
+        hasilnya mungkin tidak masuk akal.
+      </p>
+
+    </div>
+
+
+    <div class="meter">
+
+      <div class="meter-number" id="meterNumber">
+        0%
+      </div>
+
+      <div class="meter-bar">
+        <div class="meter-fill" id="meterFill"></div>
+      </div>
+
+      <button onclick="startMeter()">
+        Coba hitung ♡
+      </button>
+
+      <div class="meter-result" id="meterResult"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LETTER -->
+
+<section class="section letter-section">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">
+        A Letter From Sinok
+      </div>
+
+      <h2 class="title">
+        Untuk Mamas.
+      </h2>
+
+    </div>
+
+
+    <div class="letter">
+
+      <div class="letter-content">
+
+        <p>
+          Mamas,
+        </p>
+
+        <p>
+          Kadang Sinok masih heran bagaimana seseorang yang
+          awalnya cuma dikenal dari sebuah chat bisa menjadi
+          seseorang yang begitu penting dalam hidup Sinok.
+        </p>
+
+        <p>
+          Kita tidak punya awal cerita yang sempurna.
+          Tidak ada pernyataan cinta yang dramatis.
+          Tidak ada momen seperti di film.
+        </p>
+
+        <p>
+          Tapi mungkin justru itu yang membuat cerita kita
+          terasa nyata.
+        </p>
+
+        <p>
+          Kita tumbuh dari obrolan kecil, candaan,
+          pertemuan, perjalanan, keluarga, doa,
+          dan hari-hari sederhana yang akhirnya menjadi
+          kenangan.
+        </p>
+
+        <p>
+          Terima kasih sudah menjadi seseorang yang tetap ada.
+          Terima kasih untuk perhatian-perhatian kecil yang
+          mungkin terlihat sederhana, tapi selalu Sinok ingat.
+        </p>
+
+        <p>
+          Semoga perjalanan kita tidak berhenti sampai di sini.
+          Semoga kita terus belajar menjadi dua orang yang
+          saling menjaga, saling menguatkan, dan saling memilih.
+        </p>
+
+        <p>
+          Dan kalau suatu hari nanti kita melihat kembali
+          website kecil ini, Sinok ingin kita tersenyum dan berkata:
+        </p>
+
+        <p>
+          <strong>
+            "Ternyata kita benar-benar berhasil sampai sejauh ini."
+          </strong>
+        </p>
+
+        <div class="signature">
+          Love,<br>
+          Sinok ♡
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FUTURE -->
+
+<section class="future">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">Chapter 04</div>
+
+      <h2 class="title">
+        Kalau suatu hari<br>
+        kita membuka ini lagi...
+      </h2>
+
+      <p class="description">
+        Sinok berharap beberapa hal yang sekarang hanya
+        menjadi impian, sudah berubah menjadi kenangan.
+      </p>
+
+    </div>
+
+
+    <div class="future-cards">
+
+      <div class="future-card">
+
+        <div class="icon">♡</div>
+
+        <h3>Bahagia</h3>
+
+        <p>
+          Bahagia selamanya,
+          dengan versi kita yang terus bertumbuh.
+        </p>
+
+      </div>
+
+
+      <div class="future-card">
+
+        <div class="icon">✦</div>
+
+        <h3>Kaya</h3>
+
+        <p>
+          Semoga rezeki kita luas dan cukup
+          untuk mewujudkan banyak mimpi.
+        </p>
+
+      </div>
+
+
+      <div class="future-card">
+
+        <div class="icon">☾</div>
+
+        <h3>Makkah</h3>
+
+        <p>
+          Suatu hari kita berdiri di tempat
+          yang selama ini kita impikan.
+        </p>
+
+      </div>
+
+
+      <div class="future-card">
+
+        <div class="icon">☽</div>
+
+        <h3>Madinah</h3>
+
+        <p>
+          Berjalan bersama,
+          berdoa bersama.
+        </p>
+
+      </div>
+
+
+      <div class="future-card">
+
+        <div class="icon">💍</div>
+
+        <h3>5 Tahun Lagi</h3>
+
+        <p>
+          Dalam bayangan Sinok,
+          kita sudah menikah dan hidup bahagia.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAME -->
+
+<section class="section game-section">
+
+  <div class="container">
+
+    <div class="center">
+
+      <div class="eyebrow">
+        Mission For Mamas
+      </div>
+
+      <h2 class="title">
+        Seberapa ingat<br>
+        Mamas tentang Sinok?
+      </h2>
+
+      <p class="description" style="color:#777;">
+        Hati-hati. Jawaban yang salah akan menyakitkan hati
+        seseorang yang sangat cantik. 😂
+      </p>
+
+    </div>
+
+
+    <div class="game" id="game">
+
+      <div id="gameArea">
+
+        <div class="progress" id="progress"></div>
+
+        <div class="question-label" id="questionNumber"></div>
+
+        <div class="question" id="questionText"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="game-feedback" id="gameFeedback"></div>
+
+        <button class="next" id="nextBtn" onclick="nextQuestion()">
+          Lanjut →
+        </button>
+
+      </div>
+
+
+      <div class="game-result" id="gameResult">
+
+        <div style="font-size:50px;">♡</div>
+
+        <h3>
+          Mission Complete
+        </h3>
+
+        <p id="scoreText"></p>
+
+        <div class="unlock">
+
+          <div>
+            🔐 Ada satu pesan yang belum dibuka.
+          </div>
+
+          <button onclick="openSecret()">
+            Buka pesan rahasia
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+  <div class="container">
+
+    <div class="final-small">
+      22 • 11 • 2026
+    </div>
+
+    <div class="final-heart">
+      ♥
+    </div>
+
+    <h2>
+      Kalau boleh<br>
+      memilih lagi...
+    </h2>
+
+    <p>
+      Sinok tetap akan memilih Mamas.
+    </p>
+
+    <br>
+
+    <p>
+      Dari semua kemungkinan yang ada di dunia,
+      Sinok bersyukur cerita kita dipertemukan.
+    </p>
+
+    <br>
+
+    <p>
+      Semoga ini bukan hanya anniversary pertama kita,
+      tapi salah satu dari banyak anniversary yang
+      akan kita rayakan bersama.
+    </p>
+
+    <br>
+
+    <p>
+      <strong>
+        Sampai nanti kita tua bersama.
+      </strong>
+    </p>
+
+    <button class="restart" onclick="location.reload()">
+      ↻ Mulai lagi
+    </button>
+
+  </div>
+
+</section>
+
+
+<div class="footer">
+  Made with love by Sinok ♡ for Mamas
+</div>
+
+</main>
+
+
+<!-- ================= SECRET SCREEN ================= -->
+
+<div class="secret-screen" id="secretScreen">
+
+  <div class="secret-content">
+
+    <div class="lock">
+      🔐
+    </div>
+
+    <div id="secretOpening">
+
+      <div class="eyebrow">
+        SECRET MESSAGE
+      </div>
+
+      <h2>
+        Pesan ini<br>
+        hanya untuk Mamas.
+      </h2>
+
+      <button class="start-btn" onclick="revealSecret()">
+        Buka pesan ♡
+      </button>
+
+    </div>
+
+
+    <div class="secret-message" id="secretMessage">
+
+      <h2>
+        Mamas...
+      </h2>
+
+      <p>
+        Kalau Mamas sampai membaca ini,
+        berarti Mamas sudah melewati sedikit perjalanan
+        tentang kita.
+      </p>
+
+      <p>
+        Tapi ada satu hal yang sebenarnya tidak perlu
+        ditebak dari game apa pun.
+      </p>
+
+      <strong>
+        Sinok sayang Mamas. ♡
+      </strong>
+
+      <p style="margin-top:25px;">
+        Dan Sinok masih ingin melanjutkan cerita ini
+        bersama Mamas.
+      </p>
+
+      <button class="start-btn" onclick="closeSecret()">
+        Kembali ke cerita
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ================= STARS ================= */
+
+const stars=document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+
+  const star=document.createElement("div");
+
+  star.className="star";
+
+  star.style.left=Math.random()*100+"%";
+  star.style.top=Math.random()*100+"%";
+  star.style.animationDelay=Math.random()*4+"s";
+
+  stars.appendChild(star);
+
+}
+
+
+/* ================= MUSIC ================= */
+
+const music=document.getElementById("music");
+const musicBtn=document.getElementById("musicBtn");
+
+let playing=false;
+
+function playMusic(){
+
+  music.play()
+  .then(()=>{
+    playing=true;
+    musicBtn.textContent="❚❚";
+  })
+  .catch(()=>{
+    playing=false;
+  });
+
+}
+
+musicBtn.onclick=function(){
+
+  if(playing){
+
+    music.pause();
+
+    playing=false;
+
+    musicBtn.textContent="♫";
+
+  }else{
+
+    music.play();
+
+    playing=true;
+
+    musicBtn.textContent="❚❚";
+
+  }
+
+};
+
+
+/* ================= START ================= */
+
+function startJourney(){
+
+  document.getElementById("intro").style.display="none";
+
+  document.getElementById("envelopeScene").style.display="flex";
+
+  playMusic();
+
+  window.scrollTo(0,0);
+
+}
+
+
+/* ================= ENVELOPE ================= */
+
+function openEnvelope(){
+
+  const envelope=document.getElementById("envelope");
+
+  envelope.classList.add("open");
+
+  setTimeout(()=>{
+
+    document.getElementById("envelopeScene").style.display="none";
+
+    document.getElementById("main").style.display="block";
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  },1500);
+
+}
+
+
+/* ================= MEMORY ================= */
+
+function showMemory(title,text,image){
+
+  document.getElementById("memoryTitle").textContent=title;
+
+  document.getElementById("memoryText").textContent=text;
+
+  const img=document.getElementById("memoryImage");
+
+  if(image){
+
+    img.src=image;
+
+    img.style.display="block";
+
+    img.onerror=function(){
+      img.style.display="none";
+    };
+
+  }else{
+
+    img.style.display="none";
+
+  }
+
+  document.getElementById("memoryPopup").style.display="flex";
+
+}
+
+
+function closeMemory(){
+
+  document.getElementById("memoryPopup").style.display="none";
+
+}
+
+
+/* ================= LOVE METER ================= */
+
+function startMeter(){
+
+  const number=document.getElementById("meterNumber");
+
+  const fill=document.getElementById("meterFill");
+
+  const result=document.getElementById("meterResult");
+
+  let current=0;
+
+  fill.style.width="100%";
+
+  const interval=setInterval(()=>{
+
+    current++;
+
+    number.textContent=current+"%";
+
+    if(current>=100){
+
+      clearInterval(interval);
+
+      setTimeout(()=>{
+
+        number.textContent="∞%";
+
+        result.innerHTML=
+        "Ternyata rasa sayang Sinok tidak bisa dihitung dengan angka. 😭❤️";
+
+      },500);
+
+    }
+
+  },25);
+
+}
+
+
+/* ================= GAME ================= */
+
+const questions=[
+
+  {
+    q:"Apa warna baju Sinok saat pertama kali kita bertemu?",
+    options:[
+      "A. Pink",
+      "B. Cream",
+      "C. Putih",
+      "D. Coklat"
+    ],
+    answer:0
+  },
+
+  {
+    q:"Apa masakan pertama yang Sinok masakkan buat Mamas?",
+    options:[
+      "A. Nasi daun jeruk",
+      "B. Sushi",
+      "C. Rawon",
+      "D. Soto"
+    ],
+    answer:2
+  },
+
+  {
+    q:"Siapa yang paling sayang?",
+    options:[
+      "A. Sinok",
+      "B. Dila",
+      "C. Cantik",
+      "D. Pretty"
+    ],
+    answer:0
+  }
+
+];
+
+let currentQuestion=0;
+let score=0;
+let answered=false;
+
+const questionNumber=document.getElementById("questionNumber");
+const questionText=document.getElementById("questionText");
+const answers=document.getElementById("answers");
+const feedback=document.getElementById("gameFeedback");
+const nextBtn=document.getElementById("nextBtn");
+const progress=document.getElementById("progress");
+
+function createProgress(){
+
+  progress.innerHTML="";
+
+  questions.forEach((q,i)=>{
+
+    const span=document.createElement("span");
+
+    if(i<=currentQuestion){
+      span.classList.add("active");
+    }
+
+    progress.appendChild(span);
+
+  });
+
+}
+
+
+function showQuestion(){
+
+  answered=false;
+
+  createProgress();
+
+  const q=questions[currentQuestion];
+
+  questionNumber.textContent=
+    "MISSION "+(currentQuestion+1)+" / "+questions.length;
+
+  questionText.textContent=q.q;
+
+  answers.innerHTML="";
+
+  feedback.textContent="";
+
+  nextBtn.style.display="none";
+
+  q.options.forEach((option,index)=>{
+
+    const button=document.createElement("button");
+
+    button.className="answer";
+
+    button.textContent=option;
+
+    button.onclick=()=>chooseAnswer(index,button);
+
+    answers.appendChild(button);
+
+  });
+
+}
+
+
+function chooseAnswer(index,button){
+
+  if(answered)return;
+
+  answered=true;
+
+  const q=questions[currentQuestion];
+
+  const all=document.querySelectorAll(".answer");
+
+  all.forEach(x=>x.disabled=true);
+
+  if(index===q.answer){
+
+    button.classList.add("correct");
+
+    score++;
+
+    feedback.textContent=
+      "Benar! Mamas masih ingat. 🥹❤️";
+
+  }else{
+
+    button.classList.add("wrong");
+
+    all[q.answer].classList.add("correct");
+
+    feedback.textContent=
+      "MAMASSS 😭 masa lupa?!";
+
+  }
+
+  if(currentQuestion<questions.length-1){
+
+    nextBtn.style.display="inline-block";
+
+  }else{
+
+    setTimeout(showGameResult,1000);
+
+  }
+
+}
+
+
+function nextQuestion(){
+
+  currentQuestion++;
+
+  showQuestion();
+
+}
+
+
+function showGameResult(){
+
+  document.getElementById("gameArea").style.display="none";
+
+  document.getElementById("gameResult").style.display="block";
+
+  document.getElementById("scoreText").textContent=
+    "Mamas berhasil menjawab "+score+" dari "+questions.length+" pertanyaan.";
+
+}
+
+
+showQuestion();
+
+
+/* ================= SECRET ================= */
+
+function openSecret(){
+
+  document.getElementById("secretScreen").style.display="flex";
+
+}
+
+
+function revealSecret(){
+
+  document.getElementById("secretOpening").style.display="none";
+
+  document.getElementById("secretMessage").style.display="block";
+
+}
+
+
+function closeSecret(){
+
+  document.getElementById("secretScreen").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>
